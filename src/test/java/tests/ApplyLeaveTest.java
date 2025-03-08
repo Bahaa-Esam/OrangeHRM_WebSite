@@ -3,46 +3,52 @@ package tests;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Logger;
+
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.LeavePage;
 import pages.LoginPage;
 
 public class ApplyLeaveTest extends BaseTest {
-    private LeavePage leavePage;
-    private LoginPage loginPage;
+    private LeavePage leavePage; // Instance of LeavePage for leave-related actions
+    private LoginPage loginPage; // Instance of LoginPage for user login actions
     private static final Logger logger = Logger.getLogger(ApplyLeaveTest.class.getName());
 
     @BeforeMethod
     public void setUp() {
-        super.setUp();
-        logger.info("[ApplyLeaveTest] Setting up test...");
-        loginPage = new LoginPage(driver);
-        leavePage = new LeavePage(driver);
+        super.setUp(); // Initializes the base test setup
+        logger.info("[ApplyLeaveTest] Setting up the test environment...");
+        loginPage = new LoginPage(driver); // Initialize the LoginPage
+        leavePage = new LeavePage(driver); // Initialize the LeavePage
 
         // Perform a valid login
+        logger.info("[ApplyLeaveTest] Executing a valid login...");
         loginPage.performValidLogin();
     }
 
     @Test
-    public void testapplyLeaveTest() {
+    public void testApplyLeave() {
         logger.info("[ApplyLeaveTest] Navigating to Leave Page...");
-        leavePage.clickleavePageBtn();
-        leavePage.verifyRedirectedLeavePage();
-        leavePage.clickApplyFormBtn();
-        leavePage.clickSelectLeaveTypeBtn();
-        leavePage.clickFmlaTypeBtn(); // FMLA Type Leave
-
+        leavePage.clickLeavePageBtn(); // Click on the Leave page button
+        leavePage.verifyRedirectedLeavePage(); // Verify redirection to the Leave page
+        leavePage.clickApplyFormBtn(); // Click on the Apply Leave form button
+        
         // 🔹 Get today's date
         String fromDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        leavePage.typeFromDateField(fromDate);
+        leavePage.typeFromDateField(fromDate); // Input the start date of leave
         
-        // 🔹 Get toDate (3 days later)
+        // 🔹 Calculate the end date (3 days later)
         String toDate = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        leavePage.typeToDateField(toDate);
+        //leavePage.typeToDateField(toDate); // Uncomment if end date input is required
+        leavePage.clickSelectLeaveTypeBtn(); // Click to select leave type
+        leavePage.clickSecondOptionInTypes(); // Select the second leave type (e.g., FMLA)
         
-        logger.info("[ApplyLeaveTest] Applied leave from: Type Dates....");
+        logger.info("[ApplyLeaveTest] Applying leave from: " + fromDate + " to: " + toDate + " with type: FMLA.");
         
-        leavePage.clickApplyBtn();
+        leavePage.clickApplyBtn(); // Click on the Apply button
+        Assert.assertTrue(leavePage.verifyLeaveIsApplied(), "[ApplyLeaveTest] Leave application verification failed!");
+        
+        logger.info("[ApplyLeaveTest] Leave application submitted successfully.");
     }
 }
