@@ -5,6 +5,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.logging.Logger;
+import org.openqa.selenium.support.ui.Select;
 
 /**
  * BasePage serves as a foundation for all page classes, providing common web interactions and utilities.
@@ -22,6 +23,17 @@ public class BasePage {
     public BasePage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    }
+    
+    public void selectDropdownByVisibleText(By locator, String visibleText) {
+        try {
+            WebElement dropdownElement = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+            Select dropdown = new Select(dropdownElement);
+            dropdown.selectByVisibleText(visibleText);
+            logger.info("Selected '" + visibleText + "' from dropdown: " + locator);
+        } catch (Exception e) {
+            logger.severe("Failed to select '" + visibleText + "' from dropdown: " + locator + " - " + e.getMessage());
+        }
     }
 
     /**
