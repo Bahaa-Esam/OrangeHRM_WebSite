@@ -23,8 +23,8 @@ public class PIMPage extends BasePage {
     private By usernameField = By.xpath("(//input[@class='oxd-input oxd-input--active'])[3]");
     private By passwordField = By.xpath("(//input[@type='password'])[1]");
     private By confirmPasswordField = By.xpath("(//input[@type='password'])[2]");
-    private By enableStatusRBtn = By.cssSelector("input[type='radio'][value='2']");
-    private By disableStatusRBtn = By.cssSelector("input[type='radio'][value='1']");
+    private By enableStatusRBtn = By.xpath("//label[normalize-space()='Enabled']");
+    private By disableStatusRBtn = By.xpath("//label[normalize-space()='Disabled']");
     private By saveBtn = By.cssSelector(".oxd-button--secondary");
     private By cancelBtn = By.xpath("//button[normalize-space()='Cancel']");
     private By succesfullyAddedMessage = By.cssSelector(".bi-check2");

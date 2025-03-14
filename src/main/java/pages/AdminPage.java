@@ -1,16 +1,20 @@
 package pages;
 
+import java.util.logging.Logger;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class AdminPage {
-    private BasePage elementUtil;
+public class AdminPage extends BasePage {
+    private static final Logger logger = Logger.getLogger(RecruitmentPage.class.getName());
+
 
     public AdminPage(WebDriver driver) {
-        this.elementUtil = new BasePage(driver);
-    }
+		super(driver);
+		// TODO Auto-generated constructor stub
+	}
 
-    // Locators for Admin Page elements
+	// Locators for Admin Page elements
     private By adminItem = By.cssSelector(".oxd-main-menu-item-wrapper:nth-child(1) .oxd-text");
     private By addBtn = By.className("bi-plus");
     private By addUsername = By.cssSelector(".oxd-grid-item:nth-child(4) .oxd-input");
@@ -26,71 +30,74 @@ public class AdminPage {
     private By statusOptions = By.cssSelector(".oxd-grid-item:nth-child(3) .oxd-select-text");
     private By disableStatusOption = By.cssSelector(".oxd-select-option:nth-child(2)");
     private By secondOptionEmployeeName = By.cssSelector(".oxd-autocomplete-option:nth-child(2)");
-    private By successMessage = By.cssSelector(".oxd-text--toast-title");
+    private By successMessage = By.xpath("//p[text()='Successfully Saved']");
 
     // Actions on Admin Page elements
     public void clickAdminItem() {
-        elementUtil.clickElement(adminItem);
+        clickElement(adminItem);
     }
 
     public void clickAddButton() {
-        elementUtil.clickElement(addBtn);
+        clickElement(addBtn);
     }
 
     public void enterAddUsername(String username) {
-        elementUtil.typeText(addUsername, username);
+        typeText(addUsername, username);
     }
 
     public void enterAddEmployeeName(String employeeName) {
-        elementUtil.typeText(addEmployeeName, employeeName);
+       typeText(addEmployeeName, employeeName);
     }
 
     public void enterPassword(String password) {
-        elementUtil.typeText(passwordField, password);
+        typeText(passwordField, password);
     }
 
     public void enterConfirmPassword(String confirmPasswordText) {
-        elementUtil.typeText(confirmPassword, confirmPasswordText);
+        typeText(confirmPassword, confirmPasswordText);
     }
 
     public void clickSaveButton() {
-        elementUtil.clickElement(saveBtn);
+        clickElement(saveBtn);
     }
 
     public void clickCancelButton() {
-        elementUtil.clickElement(cancelBtn);
+        clickElement(cancelBtn);
     }
 
     public void openStatusOptions() {
-        elementUtil.clickElement(statusOptions);
+        clickElement(statusOptions);
     }
 
     public void selectEnableStatusOption() {
-        elementUtil.clickElement(enableStatusOption);
+        clickElement(enableStatusOption);
     }
 
     public void selectDisableStatusOption() {
-        elementUtil.clickElement(disableStatusOption);
+        clickElement(disableStatusOption);
     }
 
     public void openAdminRoles() {
-        elementUtil.clickElement(roleOptions);
+        clickElement(roleOptions);
     }
 
     public void selectAdminRole() {
-        elementUtil.clickElement(adminRoleOption);
+        clickElement(adminRoleOption);
     }
 
     public void selectEssRoleOption() {
-        elementUtil.clickElement(essRoleOption);
+        clickElement(essRoleOption);
     }
 
     public void selectSecondOptionEmployeeName() {
-        elementUtil.clickElement(secondOptionEmployeeName);
+        clickElement(secondOptionEmployeeName);
     }
 
     // Checks if the user was added successfully
     public boolean isUserAddedSuccessfully() {
-        return elementUtil.isElementDisplayed(successMessage);
+        logger.info("Checking if User was added successfully");
+        boolean isSuccess = isElementDisplayed(successMessage);
+        logger.info("User added successfully: " + isSuccess);
+        return isSuccess;
     }
 }

@@ -3,7 +3,6 @@ package pages;
 import java.util.logging.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
 
 public class LeavePage extends BasePage {
     private static final Logger logger = Logger.getLogger(LeavePage.class.getName());
@@ -20,12 +19,12 @@ public class LeavePage extends BasePage {
     private By secondOptionInDuration = By.cssSelector("div[role='listbox'] div:nth-child(2) span:nth-child(1)");
     private By fmlaTypeBtn = By.xpath("//span[normalize-space()='CAN - FMLA']");
     private By matternityTypeBtn = By.xpath("//span[normalize-space()='CAN - Matternity']");
-    private By fromDateField = By.xpath("(//input[@placeholder='yyyy-dd-mm'])[1]");
+    private By fromDateField = By.cssSelector(".oxd-grid-item:nth-child(1) .oxd-input");
     private By durationDropDownBtn = By.xpath("(//i[@class='oxd-icon bi-caret-down-fill oxd-select-text--arrow'])[2]");
     private By toDateField = By.xpath("(//input[@placeholder='yyyy-dd-mm'])[2]");
     private By applyBtn = By.cssSelector("button[type='submit']");
-    private By allertFaildMessage = By.cssSelector(".oxd-icon.bi-exclamation-triangle.oxd-toast-icon");
-    private By allertSuccesMessage = By.cssSelector(".oxd-text.oxd-text--p.oxd-text--toast-title.oxd-toast-content-text");
+    private By allertSuccesMessage = By.xpath("//p[text()='Successfully Saved']");
+    private By overlapError = By.xpath("//h6[normalize-space()='Overlapping Leave Request(s) Found']");
 
     // Methods
     public void clickLeavePageBtn() {
@@ -83,5 +82,10 @@ public class LeavePage extends BasePage {
 
     public void clickApplyBtn() {
         clickElement(applyBtn);
+    }
+    public boolean overLappingError() {
+    	boolean success = isElementDisplayed(overlapError);
+    	logger.info("[LeavePage] Overlapping Leave Request(s) Found: " + success);
+    	return success;
     }
 }

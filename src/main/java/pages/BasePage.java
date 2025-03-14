@@ -6,6 +6,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.logging.Logger;
 import org.openqa.selenium.support.ui.Select;
+import java.nio.file.Paths;
+
 
 /**
  * BasePage serves as a foundation for all page classes, providing common web interactions and utilities.
@@ -35,6 +37,22 @@ public class BasePage {
             logger.severe("Failed to select '" + visibleText + "' from dropdown: " + locator + " - " + e.getMessage());
         }
     }
+    
+
+    /**
+     * Uploads a file located in the resources folder to the specified file input element.
+     *
+     * @param locator   The By locator of the file input element.
+     * @param fileName  The name of the file in the resources folder.
+     */
+    public void uploadFile(By fileInputLocator, String fileName) {
+        // Get the absolute path of the file from the resources folder
+    	String filePath = Paths.get("src/test/resources/Test_case.pdf").toAbsolutePath().toString();
+
+        // Find the input element and send the file path
+        driver.findElement(fileInputLocator).sendKeys(filePath);
+    }
+
 
     /**
      * Waits for an element to be visible on the page.
@@ -140,25 +158,25 @@ public class BasePage {
         }
     }
 
-    /**
-     * Verifies if an element is displayed and contains the expected text.
-     *
-     * @param locator      the By locator of the element
-     * @param expectedText the expected text to verify
-     * @return true if the element is displayed and contains the expected text; false otherwise
-     */
-    public boolean isElementDisplayedWithText(By locator, String expectedText) {
-        try {
-            WebElement element = waitUntilVisible(locator);
-            if (element != null && element.isDisplayed()) {
-                String actualText = element.getText();
-                return actualText.equals(expectedText);
-            }
-        } catch (Exception e) {
-            logger.warning(getLogPrefix() + "Error verifying element text: " + e.getMessage());
-        }
-        return false;
-    }
+//    /**
+//     * Verifies if an element is displayed and contains the expected text.
+//     *
+//     * @param locator      the By locator of the element
+//     * @param expectedText the expected text to verify
+//     * @return true if the element is displayed and contains the expected text; false otherwise
+//     */
+//    public boolean isElementDisplayedWithText(By locator, String expectedText) {
+//        try {
+//            WebElement element = waitUntilVisible(locator);
+//            if (element != null && element.isDisplayed()) {
+//                String actualText = element.getText();
+//                return actualText.equals(expectedText);
+//            }
+//        } catch (Exception e) {
+//            logger.warning(getLogPrefix() + "Error verifying element text: " + e.getMessage());
+//        }
+//        return false;
+//    }
 
     /**
      * Retrieves the current page URL.
@@ -191,4 +209,7 @@ public class BasePage {
     private String getLogPrefix() {
         return "[BasePage] ";
     }
+    
+
+
 }
