@@ -20,7 +20,7 @@ public class BaseTest {
     public void tearDown() {
         if (driver != null) {
             System.out.println("Closing WebDriver...");
-            //driver.quit();
+            driver.quit();
         }
     }
 }
