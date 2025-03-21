@@ -1,5 +1,8 @@
 package pages;
 
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -106,18 +109,26 @@ public class BasePage {
         }
     }
 
-    /**
-     * Types text into an element after ensuring it's visible.
-     *
-     * @param locator the By locator of the element
-     * @param text    the text to type into the element
-     */
+
+
+
     public void typeText(By locator, String text) {
         try {
             WebElement element = waitUntilVisible(locator);
             if (element != null) {
-                element.clear();
+                // Click on the element to focus
+                element.click();
+                
+                // Select all existing text
+                element.sendKeys(Keys.CONTROL + "a");
+                
+                // Delete the selected text
+                element.sendKeys(Keys.DELETE);
+                
+                // Type the new text
                 element.sendKeys(text);
+                
+                logger.info(getLogPrefix() + "Typed text into element: " + locator);
             } else {
                 logger.warning(getLogPrefix() + "Text input failed. Element not visible: " + locator);
             }
@@ -125,6 +136,10 @@ public class BasePage {
             logger.severe(getLogPrefix() + "Failed to type text into element: " + locator + " - " + e.getMessage());
         }
     }
+
+
+
+
 
     /**
      * Retrieves text from an element safely.

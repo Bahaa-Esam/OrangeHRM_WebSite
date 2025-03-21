@@ -17,9 +17,9 @@ public class MyInfoPage extends BasePage {
 	//Methods
 	 By myInfoPageBtn = By.xpath("//span[normalize-space()='My Info']"); 
 	 By verifNavigateToInfoPage = By.xpath("//h6[normalize-space()='Personal Details']"); 
-	 By firstNameField = By.cssSelector("input[placeholder='First Name']"); 
-	 By middNameField = By.cssSelector("input[placeholder='Middle Name']"); 
-	 By lastNameField = By.cssSelector("input[placeholder='Last Name']"); 
+	 By firstNameField = By.cssSelector(".orangehrm-firstname"); 
+	 By middNameField = By.cssSelector(".orangehrm-middlename"); 
+	 By lastNameField = By.cssSelector(".orangehrm-lastname"); 
 	 By employeeIdField = By.xpath("(//input[@class='oxd-input oxd-input--active'])[2]"); 
 	 By otherIdField = By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/div/div[2]/div[1]/form/div[2]/div[1]/div[2]/div/div[2]/input"); 
 	 By driverLicenseNumField = By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/div/div[2]/div[1]/form/div[2]/div[2]/div[1]/div/div[2]/input"); 

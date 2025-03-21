@@ -35,8 +35,8 @@ public class EditMyInfo extends BaseTest {
         Assert.assertTrue(myInfoPage.verifyNavigateToMyInfoPage(), "Failed to navigate to My Info Page");
 
         logger.info("[Edit My Info Test] Editing personal details...");
-        myInfoPage.fillFirstNameField("John");
-        myInfoPage.fillMidNameField("A.");
+        myInfoPage.fillFirstNameField("ahhhh");
+        myInfoPage.fillMidNameField("A.aaaa");
         myInfoPage.fillLastNameField("Doe");
         myInfoPage.fillEmployeeIdField("12345");
         myInfoPage.fillOtherIdField("67890");
