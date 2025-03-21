@@ -1,37 +1,35 @@
 package tests;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import helpers.AuthHelper;
 import pages.AdminPage;
-import pages.LoginPage;
-import java.util.logging.Logger;
 
 public class AddUserTest extends BaseTest {
     private AdminPage adminPage;
-    private LoginPage loginPage;
-    private static final Logger logger = Logger.getLogger(AddUserTest.class.getName());
+    private AuthHelper authHelper;
+    private static final Logger logger = LogManager.getLogger(AddUserTest.class);
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
-        super.setUp(); // Initializes the base test setup
-
+        super.setUp();
         logger.info("[Add User Test] Setting up test...");
         adminPage = new AdminPage(driver);
-        loginPage = new LoginPage(driver);
+        authHelper = new AuthHelper(driver);
 
-        // Perform a valid login
-        loginPage.performValidLogin();
+        // Perform a valid login using AuthHelper
+        authHelper.performValidLogin();
     }
 
     @Test(description = "Verify that an admin can successfully add a new employee")
     public void testAddUser() {
         logger.info("[Add User Test] Navigating to Admin Page...");
-        
         adminPage.clickAdminItem();
         logger.info("[Add User Test] Verifying Admin Page...");
-        Assert.assertTrue(adminPage.isUserAddedSuccessfully(), "Failed to navigate to Admin Page");
-
+        Assert.assertTrue(adminPage.verifyNavigateToAdminPage(), "Failed to navigate to Admin Page");
 
         logger.info("[Add User Test] Adding a new employee...");
         adminPage.clickAddButton();

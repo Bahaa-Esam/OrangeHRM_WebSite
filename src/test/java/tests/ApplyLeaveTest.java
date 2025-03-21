@@ -1,59 +1,61 @@
 package tests;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.logging.Logger;
-
+import helpers.AuthHelper;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.LeavePage;
-import pages.LoginPage;
+import pages.PIMPage;
+
+import java.util.logging.Logger;
 
 public class ApplyLeaveTest extends BaseTest {
-    private LeavePage leavePage; // Instance of LeavePage for leave-related actions
-    private LoginPage loginPage; // Instance of LoginPage for user login actions
+    private PIMPage pimPage;
+    private AuthHelper authHelper;
     private static final Logger logger = Logger.getLogger(ApplyLeaveTest.class.getName());
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
-        super.setUp(); // Initializes the base test setup
-        logger.info("[ApplyLeaveTest] Setting up the test environment...");
-        leavePage = new LeavePage(driver); // Initialize the LeavePage
-        loginPage = new LoginPage(driver);
+        super.setUp();
+        logger.info("[Add Employee Test] Setting up test...");
+        pimPage = new PIMPage(driver);
+        authHelper = new AuthHelper(driver);
 
-        // Perform a valid login
-        logger.info("[ApplyLeaveTest] Executing a valid login...");
-        loginPage.performValidLogin();
+        // Perform a valid login using AuthHelper
+        authHelper.performValidLogin();
     }
 
     @Test
-    public void testApplyLeave() {
-        logger.info("[Apply Leave Test] Navigating to Leave Page...");
-        leavePage.clickLeavePageBtn(); // Click on the Leave page button
-        Assert.assertTrue(leavePage.verifyRedirectedLeavePage(), "Failed to navigate to Recruitment Page"); // Verify redirection to the Leave page
+    public void testAddEmployeeFromPIMPage() {
+        logger.info("[AddEmployeeTest] Navigating to PIM Page...");
+        pimPage.clickPIMPageBtn();
 
-        leavePage.clickApplyFormBtn(); // Click on the Apply Leave form button
-        
-        // 🔹 Get today's date
-        String fromDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-dd-MM"));
-        leavePage.typeFromDateField(fromDate); // Input the start date of leave
-        
-        // 🔹 Calculate the end date (3 days later)
-        String toDate = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("yyyy-dd-MM"));
-        //leavePage.typeToDateField(toDate); // Uncomment if end date input is required
-        leavePage.clickSelectLeaveTypeBtn(); // Click to select leave type
-        leavePage.clickSecondOptionInTypes(); // Select the second leave type (e.g., FMLA)
-        
-        logger.info("[ApplyLeaveTest] Applying leave from: " + fromDate + " to: " + toDate + " with type: FMLA.");
-        leavePage.clickApplyBtn(); // Click on the Apply button
-        
-        Assert.assertFalse(leavePage.overLappingError(), "[ApplyLeaveTest] Error!> Overlapping Leave Request(s) Found");
-        logger.info("[Apply Leave Test] Error!> Overlapping Leave Request(s) Found");
-        
-        Assert.assertTrue(leavePage.verifyLeaveIsApplied(), "[ApplyLeaveTest] Leave application verification failed!");
-        logger.info("[Apply Leave Test] Leave application submitted successfully.");
-        
-        
+        // Validate PIM Page
+        logger.info("[AddEmployeeTest] Verifying PIM Page...");
+        Assert.assertTrue(pimPage.verifyRedirectedPIMPage(), "Failed to navigate to PIM Page");
+
+        // Add new employee
+        logger.info("[AddEmployeeTest] Adding a new employee...");
+        pimPage.clickAddEmployeeBtn();
+        pimPage.typeFirstname("AutomationUser");
+        pimPage.typeMiddlename("Selenium");
+        pimPage.typeLastname("TestNG");
+        pimPage.clickLoginDetailsSwitch();
+        pimPage.typeUsername("illaoi9i");
+        pimPage.typePassword("autoUserPass321");
+        pimPage.typeConfirmPassword("autoUserPass321");
+        pimPage.clickDisableStatusBtn();
+        pimPage.clickSaveBtn();
+
+        // Verify success message
+        Assert.assertTrue(pimPage.isEmployeeAddedSuccessfully(), "Employee not added successfully!");
+
+        // Verify that the employee's name is saved correctly
+        logger.info("[AddEmployeeTest] Verifying employee details...");
+        Assert.assertEquals(pimPage.getFirstnameEmployee(), "AutomationUser", "First name does not match");
+
+        // Log out
+        logger.info("[AddEmployeeTest] Logging out...");
+        pimPage.clickUsernameIcon();
+        pimPage.clickLogoutBtn();
     }
 }

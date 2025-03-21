@@ -1,27 +1,30 @@
 package tests;
 
+import java.util.logging.Logger;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.testng.Assert;
+import helpers.AuthHelper;
 import pages.LoginPage;
-import java.util.logging.Logger;
 
 public class LoginTest extends BaseTest {
     private LoginPage loginPage;
+    private AuthHelper authHelper;
     private static final Logger logger = Logger.getLogger(LoginTest.class.getName());
 
     @BeforeMethod(alwaysRun = true)
     public void setup() {
         logger.info("[LoginTest] Setting up LoginPage...");
         loginPage = new LoginPage(driver);
+        authHelper = new AuthHelper(driver);
     }
 
     @Test
     public void validLoginTest() {
         logger.info("[LoginTest] Starting valid login test...");
 
-        // Perform login
-        loginPage.login("Admin", "admin123");
+        // Perform login using AuthHelper
+        authHelper.performValidLogin();
 
         // Validate successful login
         Assert.assertTrue(loginPage.isLoginSuccessful(), "[Error] Login failed!");

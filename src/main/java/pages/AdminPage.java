@@ -1,21 +1,20 @@
 package pages;
 
-import java.util.logging.Logger;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class AdminPage extends BasePage {
-    private static final Logger logger = Logger.getLogger(RecruitmentPage.class.getName());
-
+    private static final Logger logger = LogManager.getLogger(AdminPage.class);
 
     public AdminPage(WebDriver driver) {
-		super(driver);
-		// TODO Auto-generated constructor stub
-	}
+        super(driver);
+    }
 
-	// Locators for Admin Page elements
+    // Locators for Admin Page elements
     private By adminItem = By.cssSelector(".oxd-main-menu-item-wrapper:nth-child(1) .oxd-text");
+    private By verifyAdminPage = By.xpath("(//h6[normalize-space()='Admin'])[1]");
     private By addBtn = By.className("bi-plus");
     private By addUsername = By.cssSelector(".oxd-grid-item:nth-child(4) .oxd-input");
     private By addEmployeeName = By.cssSelector(".oxd-autocomplete-text-input > input");
@@ -36,6 +35,13 @@ public class AdminPage extends BasePage {
     public void clickAdminItem() {
         clickElement(adminItem);
     }
+    
+    public boolean verifyNavigateToAdminPage() {
+        logger.info("Checking Navigated To AdminPage successfully");
+        boolean isSuccess = isElementDisplayed(verifyAdminPage);
+        logger.info("Navigated To AdminPage successfully: " + isSuccess);
+        return isSuccess;
+    }
 
     public void clickAddButton() {
         clickElement(addBtn);
@@ -46,7 +52,7 @@ public class AdminPage extends BasePage {
     }
 
     public void enterAddEmployeeName(String employeeName) {
-       typeText(addEmployeeName, employeeName);
+        typeText(addEmployeeName, employeeName);
     }
 
     public void enterPassword(String password) {

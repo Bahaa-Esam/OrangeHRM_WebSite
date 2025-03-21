@@ -3,13 +3,13 @@ package tests;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.LoginPage;
-import java.util.logging.Logger;
+import helpers.AuthHelper;
 import pages.PIMPage;
+import java.util.logging.Logger;
 
 public class AddEmployeeTest extends BaseTest {
     private PIMPage pimPage;
-    private LoginPage loginPage;
+    private AuthHelper authHelper;
     private static final Logger logger = Logger.getLogger(AddEmployeeTest.class.getName());
 
     @BeforeMethod(alwaysRun = true)
@@ -17,10 +17,10 @@ public class AddEmployeeTest extends BaseTest {
         super.setUp();
         logger.info("[Add Employee Test] Setting up test...");
         pimPage = new PIMPage(driver);
-        loginPage = new LoginPage(driver);
+        authHelper = new AuthHelper(driver);
 
-        // Perform a valid login
-        loginPage.performValidLogin();
+        // Perform a valid login using AuthHelper
+        authHelper.performValidLogin();
     }
 
     @Test
@@ -52,8 +52,8 @@ public class AddEmployeeTest extends BaseTest {
         logger.info("[AddEmployeeTest] Verifying employee details...");
         Assert.assertEquals(pimPage.getFirstnameEmployee(), "AutomationUser", "First name does not match");
 
-        // Navigate to Employee List
-        logger.info("[AddEmployeeTest] Loging Out...");
+        // Log out
+        logger.info("[AddEmployeeTest] Logging Out...");
         pimPage.clickUsernameIcon();
         pimPage.clickLogoutBtn();
     }
