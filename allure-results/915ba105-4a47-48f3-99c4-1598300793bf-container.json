@@ -1,1 +1,0 @@
-{"uuid":"915ba105-4a47-48f3-99c4-1598300793bf","name":"tests.AddEmployeeTest.setUp","children":["274ba3d1-99d4-40f7-80bc-7d5e3b30a3a3"],"description":"","befores":[{"name":"setUp","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1741986966095,"stop":1741986972773}],"afters":[],"start":1741986966094,"stop":1741986972774}

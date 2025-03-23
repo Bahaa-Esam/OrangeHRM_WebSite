@@ -1,1 +1,0 @@
-{"uuid":"05ea3d32-217e-4bc0-a84b-2af58738f2b3","name":"tests.AddCandidate.setUp","children":["9138a79f-631b-4798-8fa6-2931aa0ba8c7"],"description":"","befores":[{"name":"setUp","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1741946767610,"stop":1741946774165}],"afters":[],"start":1741946767608,"stop":1741946774166}

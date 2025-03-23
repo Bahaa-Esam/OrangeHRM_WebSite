@@ -1,1 +1,0 @@
-{"uuid":"d2d99ff3-96d5-4120-90da-0a1ae0695a14","name":"tests.PIMTest.setUp","children":["013bd245-34c0-4da3-aff4-9c737eb8b924"],"description":"","befores":[{"name":"setUp","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1741338682356,"stop":1741338689717}],"afters":[],"start":1741338682355,"stop":1741338689717}
